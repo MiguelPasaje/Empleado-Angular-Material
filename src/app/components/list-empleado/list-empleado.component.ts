@@ -72,4 +72,10 @@ export class ListEmpleadoComponent implements AfterViewInit {
     console.log(this.dataSource);
 
   }
+
+  eliminarEmpleado(index:number){
+    console.log(index);
+    this.empleadoService.eliminarEmpleado(index)
+    this.cargarEmpleados()
+  }
 }

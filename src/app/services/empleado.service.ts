@@ -21,28 +21,32 @@ export class EmpleadoService {
       fechaIngreso: new Date(),
       estadoCivil: 'Soltero',
       sexo: 'Masculino',
-    },{
+    },
+    {
       nombreCompleto: 'luis martinez',
       telefono: '123456789',
       correo: 'luis@gmail.com',
       fechaIngreso: new Date(),
       estadoCivil: 'Soltero',
       sexo: 'Masculino',
-    },{
+    },
+    {
       nombreCompleto: 'luis martinez',
       telefono: '123456789',
       correo: 'luis@gmail.com',
       fechaIngreso: new Date(),
       estadoCivil: 'Soltero',
       sexo: 'Masculino',
-    },{
+    },
+    {
       nombreCompleto: 'luis martinez',
       telefono: '123456789',
       correo: 'luis@gmail.com',
       fechaIngreso: new Date(),
       estadoCivil: 'Soltero',
       sexo: 'Masculino',
-    },{
+    },
+    {
       nombreCompleto: 'luis martinez',
       telefono: '123456789',
       correo: 'luis@gmail.com',
@@ -54,7 +58,11 @@ export class EmpleadoService {
 
   constructor() {}
 
-  getEmpleados(){
-    return this.listEmpleados.slice()
+  getEmpleados() {
+    return this.listEmpleados.slice();
+  }
+
+  eliminarEmpleado(index: number) {
+    this.listEmpleados.splice(index, 1)
   }
 }
