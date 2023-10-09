@@ -1,3 +1,12 @@
+<div class="row">
+  <div class="col-lg-6">
+    <h2>listado de empleados</h2>
+  </div>
+  <div class="col-lg-6" style="text-align: right;">
+    <button mat-raised-button color="warn">Agregar</button>
+  </div>
+</div>
+
 <mat-form-field>
   <mat-label>Filtro</mat-label>
   <input matInput (keyup)="applyFilter($event)" placeholder="Filtro" #input autocomplete="off">

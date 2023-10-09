@@ -6,6 +6,7 @@ import { EmpleadoService } from 'src/app/services/empleado.service';
 import { Empleado } from 'src/app/models/empleado';
 import { MatDialog } from '@angular/material/dialog';
 import { MensajeConfirmacionComponent } from '../shared/mensaje-confirmacion/mensaje-confirmacion.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 // export interface PeriodicElement {
 //   name: string;
@@ -51,7 +52,8 @@ export class ListEmpleadoComponent implements AfterViewInit {
 
   constructor(
     private empleadoService: EmpleadoService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    public snackBar: MatSnackBar
   ) {
     this.listEmpleados = [];
   }
@@ -92,6 +94,7 @@ export class ListEmpleadoComponent implements AfterViewInit {
         console.log(index,result);
         this.empleadoService.eliminarEmpleado(index);
         this.cargarEmpleados();
+        this.snackBar.open('empleado eliminado','ok',{duration:3000})
       }
     });
   }
