@@ -4,6 +4,8 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, Sort, MatSortModule } from '@angular/material/sort';
 import { EmpleadoService } from 'src/app/services/empleado.service';
 import { Empleado } from 'src/app/models/empleado';
+import { MatDialog } from '@angular/material/dialog';
+import { MensajeConfirmacionComponent } from '../shared/mensaje-confirmacion/mensaje-confirmacion.component';
 
 // export interface PeriodicElement {
 //   name: string;
@@ -24,29 +26,38 @@ import { Empleado } from 'src/app/models/empleado';
 //   { position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne' },
 // ];
 
-
 @Component({
   selector: 'app-list-empleado',
   templateUrl: './list-empleado.component.html',
   styleUrls: ['./list-empleado.component.css'],
 })
-
 export class ListEmpleadoComponent implements AfterViewInit {
   listEmpleados: Empleado[];
-  displayedColumns: string[] = ['nombreCompleto', 'correo', 'estadoCivil','fechaIngreso', 'sexo','telefono','acciones'];
+  displayedColumns: string[] = [
+    'nombreCompleto',
+    'correo',
+    'estadoCivil',
+    'fechaIngreso',
+    'sexo',
+    'telefono',
+    'acciones',
+  ];
   // dataSource = ELEMENT_DATA;
   // dataSource = new MatTableDataSource(ELEMENT_DATA);
-  dataSource = new MatTableDataSource<Empleado>()
+  dataSource = new MatTableDataSource<Empleado>();
 
   @ViewChild(MatPaginator) paginator?: MatPaginator;
   @ViewChild(MatSort) sort?: MatSort;
 
-  constructor(private empleadoService: EmpleadoService) {
-    this.listEmpleados = []
+  constructor(
+    private empleadoService: EmpleadoService,
+    public dialog: MatDialog
+  ) {
+    this.listEmpleados = [];
   }
 
   ngAfterViewInit(): void {
-    this.cargarEmpleados()
+    this.cargarEmpleados();
     if (this.paginator) {
       this.dataSource.paginator = this.paginator;
     }
@@ -69,13 +80,19 @@ export class ListEmpleadoComponent implements AfterViewInit {
     if (this.sort) {
       this.dataSource.sort = this.sort;
     }
-    console.log(this.dataSource);
-
+    // console.log(this.dataSource);
   }
 
-  eliminarEmpleado(index:number){
-    console.log(index);
-    this.empleadoService.eliminarEmpleado(index)
-    this.cargarEmpleados()
+  eliminarEmpleado(index: number) {
+    const dialogRef = this.dialog.open(MensajeConfirmacionComponent, {
+      data: {mensaje:'Esta seguro de eliminar?'},
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if(result === 'aceptar'){
+        console.log(index,result);
+        this.empleadoService.eliminarEmpleado(index);
+        this.cargarEmpleados();
+      }
+    });
   }
 }
