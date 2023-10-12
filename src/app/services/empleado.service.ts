@@ -63,14 +63,23 @@ export class EmpleadoService {
   }
 
   eliminarEmpleado(index: number) {
-    this.listEmpleados.splice(index, 1)
+    this.listEmpleados.splice(index, 1);
   }
 
-  agregarEmpleado(empleado:Empleado){
-    this.listEmpleados.unshift(empleado)
+  agregarEmpleado(empleado: Empleado) {
+    this.listEmpleados.unshift(empleado);
   }
 
-  getEmpleado(index: number){
-    return this.listEmpleados[index]
+  getEmpleado(index: number) {
+    return this.listEmpleados[index];
+  }
+
+  editEmpleado(empleado: Empleado, idEmpleado: number) {
+    this.listEmpleados[idEmpleado].nombreCompleto = empleado.nombreCompleto;
+    this.listEmpleados[idEmpleado].correo = empleado.correo;
+    this.listEmpleados[idEmpleado].fechaIngreso = empleado.fechaIngreso;
+    this.listEmpleados[idEmpleado].telefono = empleado.telefono;
+    this.listEmpleados[idEmpleado].estadoCivil = empleado.estadoCivil;
+    this.listEmpleados[idEmpleado].sexo = empleado.sexo;
   }
 }
