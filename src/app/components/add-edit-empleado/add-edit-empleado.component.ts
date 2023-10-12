@@ -1,9 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_RADIO_DEFAULT_OPTIONS } from '@angular/material/radio';
 import { Empleado } from 'src/app/models/empleado';
 import { EmpleadoService } from '../../services/empleado.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
@@ -17,15 +17,18 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     },
   ],
 })
-export class AddEditEmpleadoComponent {
-  estadosCiviles: any[] = ['sotero', 'Casado', 'Divorciado'];
+export class AddEditEmpleadoComponent implements OnInit{
+  estadosCiviles: any[] = ['Soltero', 'Casado', 'Divorciado'];
+  idEmpleado: any
+  accion:string = 'Crear'
 
   myForm: FormGroup;
 
   constructor(
     private fb: FormBuilder,
     private empleadoService: EmpleadoService,
-    private route: Router, private snackBar: MatSnackBar
+    private route: Router, private snackBar: MatSnackBar,
+    private aRoute: ActivatedRoute
   ) {
     this.myForm = this.fb.group({
       nombreCompleto: ['',[Validators.required,Validators.maxLength(20)]],
@@ -35,6 +38,14 @@ export class AddEditEmpleadoComponent {
       estadoCivil: ['',[Validators.required]],
       sexo: ['',[Validators.required]],
     });
+    const idParam = 'id'
+    this.idEmpleado = this.aRoute.snapshot.params[idParam]
+  }
+  ngOnInit(): void {
+    if (this.idEmpleado) {
+      this.accion = 'Editar'
+      this.obtenerEmpleadoEditar()
+    }
   }
 
   guardarEmpleado() {
@@ -49,5 +60,18 @@ export class AddEditEmpleadoComponent {
     this.empleadoService.agregarEmpleado(empleado);
     this.snackBar.open('empleado registrado','Ok',{duration:3000})
     this.route.navigate(['/'])
+  }
+
+  obtenerEmpleadoEditar(){
+    const empleado: Empleado = this.empleadoService.getEmpleado(this.idEmpleado)
+    console.log(empleado);
+    this.myForm.patchValue({
+      nombreCompleto: empleado.nombreCompleto,
+      correo: empleado.correo,
+      fechaIngreso: empleado.fechaIngreso,
+      telefono: empleado.telefono,
+      estadoCivil: empleado.estadoCivil,
+      sexo: empleado.sexo,
+    })
   }
 }

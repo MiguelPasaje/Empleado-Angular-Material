@@ -69,4 +69,8 @@ export class EmpleadoService {
   agregarEmpleado(empleado:Empleado){
     this.listEmpleados.unshift(empleado)
   }
+
+  getEmpleado(index: number){
+    return this.listEmpleados[index]
+  }
 }
