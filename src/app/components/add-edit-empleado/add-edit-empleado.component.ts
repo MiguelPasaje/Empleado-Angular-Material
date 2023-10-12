@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_RADIO_DEFAULT_OPTIONS } from '@angular/material/radio';
 import { Empleado } from 'src/app/models/empleado';
 import { EmpleadoService } from '../../services/empleado.service';
@@ -28,12 +28,12 @@ export class AddEditEmpleadoComponent {
     private route: Router, private snackBar: MatSnackBar
   ) {
     this.myForm = this.fb.group({
-      nombreCompleto: [''],
-      correo: [''],
-      fechaIngreso: [''],
-      telefono: [''],
-      estadoCivil: [''],
-      sexo: [''],
+      nombreCompleto: ['',[Validators.required,Validators.maxLength(20)]],
+      correo: ['',[Validators.required,Validators.email]],
+      fechaIngreso: ['',[Validators.required]],
+      telefono: ['',[Validators.required]],
+      estadoCivil: ['',[Validators.required]],
+      sexo: ['',[Validators.required]],
     });
   }
 
