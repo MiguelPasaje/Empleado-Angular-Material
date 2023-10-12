@@ -3,7 +3,7 @@
     <h2>Agregar Empleado</h2>
   </div>
 </div>
-<pre>{{myForm.value | json}}</pre>
+<!-- <pre>{{myForm.value | json}}</pre> -->
 <div class="row">
   <div class="col-lg-4">
     <form [formGroup]="myForm">
@@ -58,7 +58,7 @@
       </div>
       <br>
       <div class="col-lg-12">
-        <button class="btn btn-success btn-lg float-right" style="margin-left: 10px;">Aceptar</button>
+        <button class="btn btn-success btn-lg float-right" style="margin-left: 10px;" (click)="guardarEmpleado()">Aceptar</button>
         <button class="btn btn-secondary btn-lg float-right" routerLink="/">cancelar</button>
          ,
       </div>
